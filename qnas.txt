@@ -1,0 +1,69 @@
+Q: What themes have more than 50 sets?
+SQL: SELECT T1.name FROM themes AS T1 INNER JOIN sets AS T2 ON T1.id = T2.theme_id GROUP BY T1.name HAVING COUNT(T2.set_num) > 50
+A: The answer is 12V.
+--------------------------------------------------
+Q: List top 5 themes with most sets
+SQL: SELECT T1.name, COUNT(T2.set_num) FROM themes AS T1 INNER JOIN sets AS T2 ON T1.id = T2.theme_id GROUP BY T1.name ORDER BY COUNT(T2.set_num) DESC LIMIT 5
+A: Here are the results:
+name: Star Wars; COUNT(T2.set_num): 1035
+name: Technic; COUNT(T2.set_num): 931
+name: Key Chain; COUNT(T2.set_num): 804
+name: Bags, Totes, & Luggage; COUNT(T2.set_num): 769
+name: Friends; COUNT(T2.set_num): 682
+--------------------------------------------------
+Q: What themes have animals in it?
+SQL: SELECT T1.name FROM themes AS T1 INNER JOIN sets AS T2 ON T1.id = T2.theme_id WHERE T2.name LIKE '%animal%'
+A: The answer is Town.
+--------------------------------------------------
+Q: When was the Gears set released?
+SQL: SELECT year FROM sets WHERE name = 'Gears'
+A: The answer is 1965.
+--------------------------------------------------
+Q: What was the theme for the Gears set?
+SQL: SELECT T1.name FROM themes AS T1 INNER JOIN sets AS T2 ON T1.id = T2.theme_id WHERE T2.name = 'Gears'
+A: The answer is Samsonite.
+--------------------------------------------------
+Q: How many Ninjago sets have been released?
+SQL: SELECT COUNT(*) FROM sets AS s JOIN themes AS t ON s.theme_id = t.id WHERE t.name = 'Ninjago'
+A: The answer is 616.
+--------------------------------------------------
+Q: How many sets has Lego released in 2024?
+SQL: SELECT COUNT(set_num) FROM sets WHERE year = 2024
+A: The answer is 1232.
+--------------------------------------------------
+Q: How many minifigs are there for non-human animals?
+SQL: SELECT COUNT(fig_num) FROM minifigs WHERE name NOT LIKE '%human%' AND name LIKE '%animal%'
+A: The answer is 6.
+--------------------------------------------------
+Q: What are the names for non-human animal minifigs?
+SQL: SELECT name FROM minifigs WHERE name NOT LIKE '%Human%' AND name LIKE '%Animal%'
+A: The answer is Animal Control Officer.
+--------------------------------------------------
+Q: How many Space Police minifigs are there?
+SQL: SELECT COUNT(*) FROM minifigs WHERE name LIKE '%Space Police%'
+A: The answer is 34.
+--------------------------------------------------
+Q: Name all the Space Police minifigs and give pre answer
+SQL: SELECT M.name 
+FROM minifigs M 
+JOIN inventory_minifigs IM ON M.fig_num = IM.fig_num 
+JOIN inventories I ON IM.inventory_id = I.id 
+JOIN sets S ON I.set_num = S.set_num 
+JOIN themes T ON S.theme_id = T.id 
+WHERE T.name = 'Space Police'
+A: No results found.
+--------------------------------------------------
+Q: Show me the names of all Space Police minifigs
+SQL: SELECT m.name 
+FROM minifigs m 
+JOIN inventory_minifigs im ON m.fig_num = im.fig_num 
+JOIN inventories i ON im.inventory_id = i.id 
+JOIN sets s ON i.set_num = s.set_num 
+JOIN themes t ON s.theme_id = t.id 
+WHERE t.name = 'Space Police'
+A: No results found.
+--------------------------------------------------
+Q: Show me the names of all minifigs that have Space Police in it
+SQL: SELECT name FROM minifigs WHERE name LIKE '%Space Police%'
+A: The answer is Space Police II.
+--------------------------------------------------
